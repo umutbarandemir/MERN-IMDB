@@ -20,5 +20,11 @@ const userSchema = new mongoose.Schema({
   }
 },{timestamps: true});
 
+// 🔑 Add comparePassword method to schema
+// 🔓 Compare plain-text password directly
+userSchema.methods.comparePassword = async function (enteredPassword) {
+  return enteredPassword === this.password;
+};
+
 const User = mongoose.model("User", userSchema); // Create a model named "User" using the userSchema
 export default User; // Export the User model for use in other parts of the application
