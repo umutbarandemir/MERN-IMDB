@@ -1,6 +1,6 @@
 import express from 'express';
 import {  userLoggedIn } from '../middleware/checkUserMiddelware.js';
-import { register, login, logout } from '../controllers/userController.js';
+import { register, login, logout , checkUser, updateProfile} from '../controllers/userController.js';
 
 const router = express.Router();
 
@@ -10,9 +10,9 @@ router.post("/register",register);
 
 router.post("/logout",logout);
 
-// router.put("/profileUpdate",userLoggedIn, profile);
+router.put("/profileUpdate",userLoggedIn, updateProfile);
 
-// router.get("/checkUser",userLoggedIn, checkUser);
+router.get("/checkUser",userLoggedIn, checkUser);
 
 
 export default router;

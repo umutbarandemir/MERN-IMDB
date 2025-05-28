@@ -41,5 +41,3 @@ export const userLoggedIn = async (req, res, next) => {
         console.error("Error in authMiddleware:", error); // Log the error to the console
     }
 }
-
-export const isAdmin = (req, res, next) => {}
