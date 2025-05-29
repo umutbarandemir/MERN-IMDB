@@ -18,12 +18,6 @@ const tvShowSchema = new mongoose.Schema({
     type: [String],
     enum:["comedy", "action", "horror", "romance", "documentary", "drama", "thriller", "sci-fi", "fantasy"],
     required: true,
-    validate: {
-    validate: {
-      validator: arr => arr.length > 0,
-      message: 'At least one genre is required.'
-    }
-  },
   },
   seasonNumber:{
     type: Number,
