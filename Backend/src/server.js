@@ -9,7 +9,6 @@ import movieRoutes from './routes/movie.js';
 import tvshowRoutes from './routes/tvshow.js';
 import commentRoutes from './routes/comment.js';
 import ratingRoutes from './routes/rate.js';
-import likeRoutes from './routes/like.js';
 
 import fileUpload from 'express-fileupload';
 import path from 'path';
@@ -43,7 +42,6 @@ app.use("/api/movies",movieRoutes);
 app.use("/api/tvshows",tvshowRoutes);
 app.use("/api/comments",commentRoutes);
 app.use("/api/ratings",ratingRoutes);
-app.use("/api/likes",likeRoutes);
 
 
 
