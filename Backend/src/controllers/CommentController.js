@@ -110,7 +110,7 @@ export const getCommentsByMovie = async (req, res) => {
 // GET /api/comments/tvshow/:tvShowId
 export const getCommentsByTvShow = async (req, res) => {
   try {
-    const comments = await Comment.find({ tvShowId: req.params.tvShowId }).populate('userId', '-password'); // dont fetch the password
+    const comments = await Comment.find({ tvShowId: req.params.tvShowId }).populate('userId', "-password -__v"); // dont fetch the password
     res.status(200).json(comments);
   } catch (error) {
     res.status(500).json({ message: error.message });
