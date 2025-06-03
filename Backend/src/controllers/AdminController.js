@@ -13,7 +13,7 @@ const uploadToCloudinary = async (file) => {
 	}
 };
 
-// Create Movie
+// Create Movie, to create without image, use the same endpoint but without the file upload add photo as a variable, comment out imageFile and photo
 export const createMovie = async (req, res) => {
   try {
     const {
