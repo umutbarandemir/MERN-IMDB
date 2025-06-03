@@ -26,11 +26,11 @@ export const useUserStore = create((set) => ({
         try {
             const response = await axiosInstance.post('/user/register', userData); // baseURL: 'http://localhost:5001/api' is the base
             toast.success('Account created successfully!');
-            set({ authUser: response.data.user, isSigningIn: false }); // response.data
+            set({ authUser: response.data.user, isSigningUp: false }); // response.data
         } catch (error) {
             toast.error('Error signing up. Please try again.');
             console.error('Error signing up:', error);
-            set({ isSigningIn: false });
+            set({ isSigningUp: false });
         }
     },
 
