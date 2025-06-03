@@ -1,6 +1,6 @@
 import express from 'express';
 import { adminOnly, userLoggedIn } from '../middleware/checkUserMiddleware.js';
-import { createMovie, updateMovie, deleteMovie, createTvShow, updateTvShow, deleteTvShow } from '../controllers/adminController.js';
+import { createMovie, updateMovie, deleteMovie, createTvShow, updateTvShow, deleteTvShow } from '../controllers/AdminController.js';
 
 const router = express.Router();
 

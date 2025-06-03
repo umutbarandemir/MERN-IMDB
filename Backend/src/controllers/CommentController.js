@@ -66,16 +66,16 @@ export const deleteComment = async (req, res) => {
 
 export const toggleLikeComment = async (req, res) => {
   try {
-    const existingLike = await Likes.findOne({ userId: req.user._id, commentId: req.params.id });
+    const existingLike = await Likes.findOne({ userId: req.user._id, commentId: req.params.id }); // Check if the user has already liked the comment
 
     if (existingLike) {
-      await Likes.findByIdAndDelete(existingLike._id);
-      await Comment.findByIdAndUpdate(req.params.id, { $pull: { likes: existingLike._id } });
+      await Likes.findByIdAndDelete(existingLike._id); // Remove the like from the Likes database
+      await Comment.findByIdAndUpdate(req.params.id, { $pull: { likes: existingLike._id } }); // Remove the like from the comment's likes array
       return res.status(200).json({ message: 'Like removed' });
     } else {
-      const newLike = new Likes({ userId: req.user._id, commentId: req.params.id });
-      await newLike.save();
-      await Comment.findByIdAndUpdate(req.params.id, { $push: { likes: newLike._id } });
+      const newLike = new Likes({ userId: req.user._id, commentId: req.params.id }); // Create a new like model instance
+      await newLike.save(); // Save the new like to the Likes database
+      await Comment.findByIdAndUpdate(req.params.id, { $push: { likes: newLike._id } }); // Add the like to the comment's likes array
       return res.status(201).json({ message: 'Like added' });
     }
   } catch (error) {
