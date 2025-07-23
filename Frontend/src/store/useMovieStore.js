@@ -9,7 +9,7 @@ const useMovieStore = create((set) => ({
   fetchMovies: async () => {
     set({ loading: true, error: null });
     try {
-      const res = await axiosInstance.get('/movies');
+      const res = await axiosInstance.get('/movies'); // http://localhost:5000/api/movies
       set({ movies: res.data, loading: false });
     } catch (err) {
       console.error('Failed to fetch movies:', err);

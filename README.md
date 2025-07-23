@@ -14,5 +14,6 @@
 
 # TODO
 -admin yorum kaldırması
+-karanlık mod/aydınlık mod
 
 
