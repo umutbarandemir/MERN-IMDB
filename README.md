@@ -16,4 +16,10 @@
 -admin yorum kaldırması
 -karanlık mod/aydınlık mod
 -başarılı girişte ana sayfaya yönlendir
+-hotmovies ve hottvshows kısmında, en yüksek puanlı 6şar filmi göster
+-liste sayfaları
+-arama barı
+-profile sayfasını
+-yorum yapmak, rating atmak
+
 
