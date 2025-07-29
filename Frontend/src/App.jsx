@@ -8,6 +8,7 @@ import SignUpPage from './pages/SignUpPage'
 import ProfilePage from './pages/ProfilePage'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   
@@ -23,6 +24,10 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Routes>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
       <Footer />
     </>
   )

@@ -15,5 +15,5 @@
 # TODO
 -admin yorum kaldırması
 -karanlık mod/aydınlık mod
-
+-başarılı girişte ana sayfaya yönlendir
 

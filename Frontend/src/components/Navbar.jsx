@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
-import { LogOut, MessageSquare, User, LogIn,Tv,Clapperboard } from "lucide-react";
+import { LogOut, MessageSquare, User, LogIn,Tv,Clapperboard,Sun,Moon,Search } from "lucide-react";
 import { useUserStore } from '../store/useUserStore.js';
-
+import { useState } from "react";
 const Navbar = () => {
 
     const { logout, authUser } = useUserStore();
+
+    const [lightMode, setLightMode] = useState(true);
+    
+    const toggleLightMode = () => {
+        setLightMode(!lightMode);
+    };
 
   return (
      <header className="border-b border-base-300 fixed w-full top-0 z-40 backdrop-blur-lg bg-base-100/80">
@@ -20,6 +26,19 @@ const Navbar = () => {
               <h1 className="text-lg font-bold">FilmHoynuk</h1>
             </Link>
           </div>
+
+          {/* middle side */}
+         <form className="flex-grow mx-4 max-w-md w-full hidden sm:flex">
+            <label className="input input-bordered flex items-center gap-2 w-full">
+              <Search className="w-4 h-4 opacity-70" />
+              <input
+                type="text"
+                className="grow"
+                placeholder="Search movies or shows..."
+                value=""
+              />
+            </label>
+          </form>
 
           {/* right side */}
 
@@ -47,7 +66,13 @@ const Navbar = () => {
                     <span className="hidden sm:inline">Login</span>
                 </Link>
             )}
-
+    
+            
+            {lightMode ? (
+                <Sun onClick={toggleLightMode} />
+            ) : (
+                <Moon onClick={toggleLightMode} />
+            )}
 
             {authUser && (
               <>
