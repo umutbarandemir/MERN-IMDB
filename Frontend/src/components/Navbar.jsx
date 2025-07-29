@@ -50,12 +50,12 @@ const Navbar = () => {
               </div>
             )}
 
-            <Link to={"/movie"} className={`btn btn-sm gap-2 transition-colors hover:opacity-80`}>
+            <Link to={"/movies"} className={`btn btn-sm gap-2 transition-colors hover:opacity-80`}>
               <Clapperboard className="w-4 h-4" />
               <span className="hidden sm:inline">Movies</span>
             </Link>
 
-            <Link to={"/tvshow"} className={`btn btn-sm gap-2 transition-colors hover:opacity-80`}>
+            <Link to={"/tvshows"} className={`btn btn-sm gap-2 transition-colors hover:opacity-80`}>
               <Tv className="w-4 h-4" />
               <span className="hidden sm:inline">TvShows</span>
             </Link>
