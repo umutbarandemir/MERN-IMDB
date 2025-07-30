@@ -21,5 +21,7 @@
 -arama barı
 -profile sayfasını
 -yorum yapmak, rating atmak
-
+-liste sayfalarında 10 eşyadan sonra, 2. sayfaya geçiş olsun
+-ana sayfadaki filmler ve diziler kısmında 3x2 dizaynında 6şar kart gösterilsin
+-top-rated movies ve tvshows backend routeı oluşturup, homepagei onunla yap
 

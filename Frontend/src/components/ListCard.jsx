@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ListCard = ({ movie }) => {
   const navigate = useNavigate();
-  const rating = movie.rating ?? 0;
+  const rating = movie.averageRating  ?? 0;
 
   const getRatingColor = (value) => {
     if (value >= 7) return 'text-green-500';

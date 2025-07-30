@@ -14,7 +14,7 @@ function SignupPage() {
     email: '',
     password: '',
   }); // could add a confirm password field here
-
+  
   const { signup , isSigningUp } = useUserStore();
 
   const validateForm = () => {
