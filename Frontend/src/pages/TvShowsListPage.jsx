@@ -15,8 +15,8 @@ const TvShowsListPage = () => {
   return (
     <div className="p-6 flex flex-col items-center gap-6">
       <h1 className="text-3xl font-bold mb-4">TvShows</h1>
-      {tvShows.slice(0, 20).map((show) => (
-        <ListCard key={show._id} movie={show} />
+      {tvShows.slice(0, 20).map((Tvshow) => (
+        <ListCard key={Tvshow._id} content={Tvshow} route="tvshow"/>
       ))}
     </div>
   );

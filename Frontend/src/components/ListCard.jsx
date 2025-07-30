@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 
-const ListCard = ({ movie }) => {
+const ListCard = ({ content , route }) => {
   const navigate = useNavigate();
-  const rating = movie.averageRating  ?? 0;
+  const rating = content.averageRating  ?? 0;
 
   const getRatingColor = (value) => {
     if (value >= 7) return 'text-green-500';
@@ -10,8 +10,9 @@ const ListCard = ({ movie }) => {
     return 'text-red-500';
   };
 
+
   const handleClick = () => {
-    navigate(`/movie/${movie._id}`);
+    navigate(`/${route}/${content._id}`);
   };
 
   return (
@@ -22,16 +23,16 @@ const ListCard = ({ movie }) => {
       {/* Photo */}
       <div className="flex-shrink-0 mr-6">
         <img
-          src={movie.photo}
-          alt={movie.title}
+          src={content.photo}
+          alt={content.title}
           className="w-20 h-20 rounded-full object-cover border-2 border-base-200"
         />
       </div>
 
       {/* Title and Description */}
       <div className="flex-1 text-center">
-        <h2 className="text-xl font-semibold mb-1">{movie.title}</h2>
-        <p className="text-sm text-gray-500 line-clamp-3">{movie.description}</p>
+        <h2 className="text-xl font-semibold mb-1">{content.title}</h2>
+        <p className="text-sm text-gray-500 line-clamp-3">{content.description}</p>
       </div>
 
       {/* Rating */}

@@ -16,7 +16,7 @@ const MoviesListPage = () => {
     <div className="p-6 flex flex-col items-center gap-6">
       <h1 className="text-3xl font-bold mb-4">Movies</h1>
       {movies.slice(0, 20).map((movie) => (
-        <ListCard key={movie._id} movie={movie} />
+        <ListCard key={movie._id} content={movie} route="movie"/>
       ))}
     </div>
   );
