@@ -18,3 +18,13 @@ export const fetchMovieById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const fetchHotMovies = async (req, res) => {
+  try {
+    const hotMovies = await Movie.find().sort({ averageRating: -1 }) // Sort by averageRating descending
+    .limit(6);   // Fetch movies with average rating greater than 5
+    res.json(hotMovies); 
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
