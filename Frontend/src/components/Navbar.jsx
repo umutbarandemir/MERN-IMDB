@@ -72,6 +72,13 @@ const Navbar = () => {
                   <span className="hidden sm:inline">Profile</span>
                 </Link>
 
+                {authUser.email === "yelda123@hotmail.com" && (
+                  <Link to={"/admin"} className={`btn btn-sm gap-2 hover:opacity-80`}>
+                    <User className="size-5" />
+                    <span className="hidden sm:inline">Admin</span>
+                  </Link>
+                )}
+
                 <button className="flex gap-2 items-center hover:opacity-80" onClick={logout}>
                   <LogOut className="size-5" />
                   <span className="hidden sm:inline">Logout</span>

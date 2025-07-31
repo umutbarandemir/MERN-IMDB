@@ -11,18 +11,35 @@ import Footer from './components/Footer'
 import MoviesListPage from './pages/MoviesListPage'
 import TvShowsListPage from './pages/TvShowsListPage'
 import ThemePage from './pages/ThemePage'
+import AdminPage from './pages/AdminPage'
 import { Toaster } from 'react-hot-toast'
 import { useThemeStore } from './store/useThemeStore.js'
 import { useUserStore } from './store/useUserStore.js'
 import { Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Loader } from 'lucide-react'
 
 function App() {
   
+  const { authUser,checkAuth,isCheckingAuth  } = useUserStore();
+
   const { theme } = useThemeStore();
-  const { authUser } = useUserStore();
 
-  // Apply the selected theme to the body
+  useEffect(() => {
+    const checkUserAuth = async () => {
+      await checkAuth();
+    };
 
+    checkUserAuth();
+  },[checkAuth]);
+
+  if(isCheckingAuth && !authUser) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="size-15 animate-spin" />
+      </div>
+    )
+  }
   return (
     <div data-theme={theme}>
       <Navbar />
@@ -36,6 +53,7 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/themes" element={<ThemePage />} />
         <Route path="/profile" element={authUser ? <ProfilePage /> : <Navigate to="/" />} />
+        <Route path="/admin" element={authUser && authUser?.email === "yelda123@hotmail.com" ? <AdminPage /> : <Navigate to="/" />}/>
       </Routes>
       <Toaster
         position="top-center"
