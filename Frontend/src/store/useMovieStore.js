@@ -19,6 +19,7 @@ const useMovieStore = create((set) => ({
       set({ error: 'Failed to fetch movies', loading: false });
     }
   },
+  
   fetchMovieById: async (id) => {
     set({ loading: true, error: null });
     try {

@@ -15,7 +15,7 @@ const HomePage = () => {
   }, [fetchMovies,fetchTvShows]);
 
   return (
-    <div className='mt-20'>
+    <div className='pt-16'>
     
 
     {/* Carousel - First 4 Movies */}

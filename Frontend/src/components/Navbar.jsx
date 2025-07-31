@@ -1,16 +1,9 @@
 import { Link } from "react-router-dom";
-import { LogOut, MessageSquare, User, LogIn,Tv,Clapperboard,Sun,Moon,Search } from "lucide-react";
+import { LogOut, MessageSquare, User, LogIn,Tv,Clapperboard,Droplet,Search } from "lucide-react";
 import { useUserStore } from '../store/useUserStore.js';
-import { useState } from "react";
 const Navbar = () => {
 
     const { logout, authUser } = useUserStore();
-
-    const [lightMode, setLightMode] = useState(true);
-    
-    const toggleLightMode = () => {
-        setLightMode(!lightMode);
-    };
 
   return (
      <header className="border-b border-base-300 fixed w-full top-0 z-40 backdrop-blur-lg bg-base-100/80">
@@ -44,9 +37,9 @@ const Navbar = () => {
 
           <div className="flex items-center gap-2">
                         
-            {authUser && authUser.fullName && (
+            {authUser && authUser.username && (
               <div className="hidden sm:flex items-center px-3 py-1 rounded-lg text-sm font-medium"> {/* bg-base-200 to add background */}
-                Welcome {authUser.fullName}
+                Welcome {authUser.username}
               </div>
             )}
 
@@ -59,19 +52,17 @@ const Navbar = () => {
               <Tv className="w-4 h-4" />
               <span className="hidden sm:inline">TvShows</span>
             </Link>
+                
+            <Link to={"/themes"} className={`btn btn-sm gap-2 transition-colors hover:opacity-80`}>
+              <Droplet className="w-4 h-4" />
+              <span className="hidden sm:inline">Themes</span>
+            </Link>
 
             {!authUser && (
                 <Link to={"/login"} className={`btn btn-sm gap-2 transition-colors hover:opacity-80`}>
                     <LogIn className="w-4 h-4" />
                     <span className="hidden sm:inline">Login</span>
                 </Link>
-            )}
-    
-            
-            {lightMode ? (
-                <Sun onClick={toggleLightMode} />
-            ) : (
-                <Moon onClick={toggleLightMode} />
             )}
 
             {authUser && (
