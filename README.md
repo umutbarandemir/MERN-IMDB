@@ -4,6 +4,9 @@
 
 ``npm i react-router-dom react-hot-toast axios zustand lucide-react``  
 
+npm install react-player -> on frontend directory, not src
+
+npm install react-youtube
 
 # Backend
 
@@ -27,3 +30,4 @@
 -sayfa yenilenince hesaptan çıkma bugını düzelt
 -profile page satır 122 "unkown" yazıp duruyor, çöz
 -kullanıcı adını hatırla ... butonu ekle girişte
+-gereksiz miktarde mount oluyor sitede
