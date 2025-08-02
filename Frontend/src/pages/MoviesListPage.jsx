@@ -10,10 +10,12 @@ const MoviesListPage = () => {
     fetchMovies();
   }, [fetchMovies]);
 
-  if (loading) return(  <div className="flex items-center justify-center h-screen">
-                          <Loader className="size-15 animate-spin" />
-                        </div>
-      );
+  if (loading) return(
+    <div className="flex items-center justify-center h-screen">
+      <Loader className="size-15 animate-spin" />
+    </div>
+    );
+    
   if (error) return <div className="text-center mt-10 text-red-500">{error}</div>;
 
   return (

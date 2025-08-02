@@ -89,11 +89,13 @@ export const checkUser = async (req, res) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    res.status(200).json({
-      _id: req.user._id,
-      username: req.user.username,
-      email: req.user.email,
-      profilePic: req.user.profilePic,
+    res.status(200).json({ // added user object name to access it in the frontend
+      user: {
+        _id: req.user._id,
+        username: req.user.username,
+        email: req.user.email,
+        profilePic: req.user.profilePic,
+      }
     });
   } catch (error) {
     console.error("Error in checkUser controller:", error);
