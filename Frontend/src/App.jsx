@@ -18,6 +18,7 @@ import { useUserStore } from './store/useUserStore.js'
 import { Navigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { Loader } from 'lucide-react'
+import useMovieStore from './store/useMovieStore.js'
 
 function App() {
   
@@ -25,13 +26,17 @@ function App() {
 
   const { theme } = useThemeStore();
 
+  const { fetchMovies, fetchTvShows } = useMovieStore();
+
   useEffect(() => {
     const checkUserAuth = async () => {
       await checkAuth();
+        fetchMovies();
+        fetchTvShows();
     };
 
     checkUserAuth();
-  },[checkAuth]);
+  },[checkAuth,fetchMovies,fetchTvShows]);
 
   if(isCheckingAuth && !authUser) {
     return (

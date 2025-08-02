@@ -1,9 +1,23 @@
 import { Link } from "react-router-dom";
 import { LogOut, MessageSquare, User, LogIn,Tv,Clapperboard,Droplet,Search } from "lucide-react";
 import { useUserStore } from '../store/useUserStore.js';
+import useMovieStore from '../store/useMovieStore.js';
+import { useState } from 'react';
 const Navbar = () => {
 
     const { logout, authUser } = useUserStore();
+
+    const { movies, tvShows } = useMovieStore();
+
+     const [searchTerm, setSearchTerm] = useState("");
+
+    const filteredResults = [...movies, ...tvShows].filter(item =>
+      (item.title || item.name)?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    const capitalize = (str) => {
+        if (!str) return "";
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    };
 
   return (
      <header className="border-b border-base-300 fixed w-full top-0 z-40 backdrop-blur-lg bg-base-100/80">
@@ -21,17 +35,50 @@ const Navbar = () => {
           </div>
 
           {/* middle side */}
-         <form className="flex-grow mx-4 max-w-md w-full hidden sm:flex">
-            <label className="input input-bordered flex items-center gap-2 w-full">
-              <Search className="w-4 h-4 opacity-70" />
-              <input
-                type="text"
-                className="grow"
-                placeholder="Search movies or shows..."
-                value=""
-              />
-            </label>
-          </form>
+          <div className="flex-grow mx-4 max-w-md w-full hidden sm:flex relative">
+              <label className="input input-bordered flex items-center gap-2 w-full shadow-md rounded-full px-4 py-2 bg-white dark:bg-gray-800">
+                <Search className="w-4 h-4 opacity-60 text-gray-500" />
+                  <input
+                                type="text"
+                                className="grow bg-transparent focus:outline-none text-sm"
+                                placeholder="Search for movies or shows..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+              </label>
+
+              {searchTerm && (
+                <div className="absolute top-full mt-2 w-full bg-white dark:bg-gray-900 shadow-xl rounded-xl z-50 max-h-[400px] overflow-y-auto border border-gray-300 dark:border-gray-700">
+                  {filteredResults.length > 0 ? (filteredResults.map((item) => (
+                    <Link
+                      key={item._id}
+                      to={item.title && item.duration ? `/movie/${item._id}` : `/tvshow/${item._id}`}
+                      className="flex items-center gap-4 p-3 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+                      onClick={() => setSearchTerm("")}
+                      >
+                        <img
+                        src={item.photo}
+                        alt={item.title || item.name}
+                        className="w-12 h-16 object-cover rounded-md shadow-sm"
+                        />
+                        <div>
+                          <h4 className="font-medium text-gray-900 dark:text-gray-100">
+                          {item.title || item.name}
+                          </h4>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                          {capitalize(item.genre?.[0]) || "Unknown"} -{" "}
+                          {item.releaseDate ? new Date(item.releaseDate).getFullYear(): item.seasonNumber || "Unknown Year"}
+                          </p>
+                        </div>
+                      </Link>
+                      ))) : (
+                              <div className="p-4 text-sm text-gray-500 dark:text-gray-400">
+                                No results found for "<strong>{searchTerm}</strong>"
+                              </div>
+                            )}
+                </div>
+              )}
+          </div>
 
           {/* right side */}
 
