@@ -19,7 +19,7 @@ const MovieCard = ({ movie }) => {
       </figure>
       <div className="card-body">
         <h2 className="card-title">{movie.title}</h2>
-        <p>{movie.description.slice(0, 100)}...</p>
+        <p className="break-words">{movie.description.slice(0, 100)}...</p>
         <div className="card-actions justify-end">
           <button onClick={handleClick} className="btn btn-primary">
             View Details
