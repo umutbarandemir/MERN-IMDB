@@ -25,9 +25,9 @@ npm install react-youtube
 -yorum yapmak, rating atmak
 -liste sayfalarında 10 eşyadan sonra, 2. sayfaya geçiş olsun
 -ana sayfadaki filmler ve diziler kısmında 3x2 dizaynında 6şar kart gösterilsin ✅
--top-rated movies ve tvshows backend routeı oluşturup, homepagei onunla yap
+-top-rated movies ve tvshows backend routeı oluşturup, homepagei onunla yap ✅
 -kullanıcı profil sayfasındayken çıkış yaparsa, ana sayfaya atılsın ✅
--sayfa yenilenince hesaptan çıkma bugını düzelt
+-sayfa yenilenince hesaptan çıkma bugını düzelt ✅
 -profile page satır 122 "unkown" yazıp duruyor, çöz
 -kullanıcı adını hatırla ... butonu ekle girişte
 -gereksiz miktarde mount oluyor sitede
