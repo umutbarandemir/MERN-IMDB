@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 
 const TvShowPage = () => {
     const { id } = useParams();
-    const { tvShow, loading, error, fetchTvShowById } = useMovieStore();
+    const { tvShow, loading, error, fetchTvShowById, rateTvShow } = useMovieStore();
     const { authUser } = useUserStore();
     const {
         comments,
@@ -33,6 +33,17 @@ const TvShowPage = () => {
         };
         fetch();
     }, [id,fetchTvShowById, fetchCommentsByTvShow]);
+
+      const handleRate = async (value) => {
+    if (!authUser) return toast.error("Login required.");
+    setRating(value);
+    try {
+      await rateTvShow(id, value, authUser._id);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
     const handleAddComment = async () => {
         if (!authUser) return toast.error("Login required.");
@@ -87,7 +98,10 @@ const TvShowPage = () => {
                         <h1 className="text-4xl font-bold">{tvShow.title}</h1>
                         <div className="flex gap-4 text-sm text-gray-300">
                             <span className="bg-yellow-500 text-black px-2 py-1 rounded font-semibold">
-                                ⭐ {typeof tvShow.averageRating === "number" ? tvShow.averageRating.toFixed(1) : "?"}
+                              ⭐ {typeof tvShow.averageRating === "number" ? tvShow.averageRating.toFixed(1) : "?"}
+                            </span>
+                            <span className="text-gray-400 text-sm">
+                              ({tvShow.ratingsCount || 0} rating{tvShow.ratingsCount === 1 ? "" : "s"})
                             </span>
                             <span>{formattedDate}</span>
                             <span>{tvShow.seasons || 1} season(s)</span>
@@ -97,14 +111,14 @@ const TvShowPage = () => {
                         <p><strong>Cast:</strong> {tvShow.cast?.join(", ")}</p>
                         <p><strong>Creator:</strong> {tvShow.director}</p>
                         <div className="flex gap-2 mt-4">
-                            {[1, 2, 3, 4, 5].map((i) => (
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
                                 <Star
                                     key={i}
-                                    onClick={() => setRating(i)}
+                                    onClick={() => handleRate(i)}
                                     className={`w-6 h-6 cursor-pointer transition ${i <= rating ? "text-yellow-400" : "text-gray-500"}`}
                                 />
                             ))}
-                            <span className="ml-2 text-lg">{rating > 0 ? `You rated: ${rating}/5` : "Rate this show"}</span>
+                            <span className="ml-2 text-lg">{rating > 0 ? `You rated: ${rating}/10` : "Rate this show"}</span>
                         </div>
                     </div>
                 </section>
