@@ -1,5 +1,7 @@
 import Movie from '../models/movieModel.js';
 import TvShow from '../models/tvShowModel.js';
+import cloudinary from '../lib/cloudinary.js';
+import Comment from '../models/commentsModel.js';
 
 const uploadToCloudinary = async (file) => {
 	try {
@@ -67,6 +69,10 @@ export const deleteMovie = async (req, res) => {
   try {
     const deletedMovie = await Movie.findByIdAndDelete(req.params.id);
     if (!deletedMovie) return res.status(404).json({ message: 'Movie not found' });
+
+    // delete related comments
+    await Comment.deleteMany({ movieId: req.params.id });
+    
     res.status(200).json({ message: 'Movie deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -131,6 +137,10 @@ export const deleteTvShow = async (req, res) => {
   try {
     const deletedTvShow = await TvShow.findByIdAndDelete(req.params.id);
     if (!deletedTvShow) return res.status(404).json({ message: 'TV Show not found' });
+
+    // delete related comments
+    await Comment.deleteMany({ tvShowId: req.params.id });
+
     res.status(200).json({ message: 'TV Show deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
