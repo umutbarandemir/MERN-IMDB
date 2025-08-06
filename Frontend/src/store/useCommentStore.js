@@ -30,29 +30,29 @@ const useCommentStore = create((set) => ({
       set({ loadingComments: false });
     }
   },
-//   fetchCommentsByTvShow: async (tvShowId) => {
-//     set({ loadingComments: true });
-//     try {
-//       const res = await axiosInstance.get(`/comments/tvshow/${tvShowId}`);
-//       const authUser = useUserStore.getState().authUser;
+  fetchCommentsByTvShow: async (tvShowId) => {
+    set({ loadingComments: true });
+    try {
+      const res = await axiosInstance.get(`/comments/tvshow/${tvShowId}`);
+      const authUser = useUserStore.getState().authUser;
 
-//       const formatted = res.data.map((comment) => ({
-//         id: comment._id,
-//         user: comment.userId?.username || "Anonymous",
-//         text: comment.commentText,
-//         date: comment.createdAt,
-//         likesCount: comment.likes?.length || 0,
-//         likedByUser: comment.likes?.some(
-//           (like) => like.userId === authUser?._id
-//         ),
-//       }));
+      const formatted = res.data.map((comment) => ({
+        id: comment._id,
+        user: comment.userId?.username || "Anonymous",
+        text: comment.commentText,
+        date: comment.createdAt,
+        likesCount: comment.likes?.length || 0,
+        likedByUser: comment.likes?.some(
+          (like) => like.userId === authUser?._id
+        ),
+      }));
 
-//       set({ comments: formatted, loadingComments: false });
-//     } catch (err) {
-//       toast.error("Failed to fetch comments", err.message);
-//       set({ loadingComments: false });
-//     }
-//   },
+      set({ comments: formatted, loadingComments: false });
+    } catch (err) {
+      toast.error("Failed to fetch comments", err.message);
+      set({ loadingComments: false });
+    }
+  },
 
   addComment: async (movieId, commentText) => {
     if (!commentText.trim()) return;
@@ -68,6 +68,47 @@ const useCommentStore = create((set) => ({
     try {
       const res = await axiosInstance.post("/comments", {
         movieId,
+        commentText,
+      });
+
+      const newComment = res.data;
+
+      set((state) => ({
+        comments: [
+          {
+            id: newComment._id,
+            user: authUser.username || "Anonymous",
+            text: newComment.commentText,
+            date: newComment.createdAt,
+            likesCount: 0,
+            likedByUser: false,
+          },
+          ...state.comments,
+        ],
+        postingComment: false,
+      }));
+      toast.success("Comment added");
+    } catch (err) {
+      console.error("Error posting comment:", err);
+      toast.error("Failed to add comment");
+      set({ postingComment: false });
+    }
+  },
+
+    addCommentTv: async (tvShowId, commentText) => {
+    if (!commentText.trim()) return;
+
+    const authUser = useUserStore.getState().authUser;
+    if (!authUser) {
+      toast.error("You must be logged in to comment.");
+      return;
+    }
+
+    set({ postingComment: true });
+
+    try {
+      const res = await axiosInstance.post("/comments", {
+        tvShowId,
         commentText,
       });
 
