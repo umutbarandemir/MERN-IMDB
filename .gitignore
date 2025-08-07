@@ -22,6 +22,8 @@ Backend/dist/
 *.local
 .env
 .env.*
+tmp*
+*.tmp
 
 # Editor directories and files
 .vscode/*

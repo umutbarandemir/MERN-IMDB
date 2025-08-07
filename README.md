@@ -31,3 +31,5 @@ npm install react-youtube
 -profile page satır 122 "unkown" yazıp duruyor, çöz
 -kullanıcı adını hatırla ... butonu ekle girişte
 -gereksiz miktarde mount oluyor sitede
+-update kısmında foto güncellenmiyor
+-consoldaki splitli uyarıyı düzelt

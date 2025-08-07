@@ -2,22 +2,29 @@ import Movie from '../models/movieModel.js';
 import TvShow from '../models/tvShowModel.js';
 import cloudinary from '../lib/cloudinary.js';
 import Comment from '../models/commentsModel.js';
+import path from 'path';
 
-const uploadToCloudinary = async (file) => {
-	try {
-		const result = await cloudinary.uploader.upload(file.tempFilePath, {
-			resource_type: "auto",
-		});
-		return result.secure_url;
-	} catch (error) {
-		console.log("Error in uploadToCloudinary", error);
-		throw new Error("Error uploading to cloudinary");
-	}
+const uploadToCloudinary = async (filePath) => {
+  try {
+    const normalizedPath = path.resolve(filePath).replace(/\\/g, "/"); // Fix for Windows
+    const result = await cloudinary.uploader.upload(normalizedPath, {
+      resource_type: "auto",
+    });
+    return result.secure_url;
+  } catch (error) {
+    console.log("Error in uploadToCloudinary", error);
+    throw new Error("Error uploading to cloudinary");
+  }
 };
 
 // Create Movie, to create without image, use the same endpoint but without the file upload add photo as a variable, comment out imageFile and photo
+
 export const createMovie = async (req, res) => {
   try {
+
+    // console.log("📦 BODY:", req.body);
+    // console.log("🖼️ FILES:", req.files);
+
     const {
       title,
       description,
@@ -29,29 +36,79 @@ export const createMovie = async (req, res) => {
       cast,
     } = req.body;
 
-    // Access the uploaded file (e.g. from multer middleware)
-    const imageFile = req.file;
+    const imageFile = req.files?.photo;
 
-    const photo = imageFile ? await uploadToCloudinary(imageFile.path) : null;
+    const photo = imageFile
+      ? await uploadToCloudinary(imageFile.tempFilePath)
+      : null;
+
+    const parsedGenre = Array.isArray(genre) ? genre : [genre];
+    const parsedCast = Array.isArray(cast) ? cast : [cast];
 
     const newMovie = new Movie({
       title,
       description,
-      photo, // Cloudinary URL
-      genre,
+      photo,
+      genre: parsedGenre,
       releaseDate,
       duration,
       trailerLink,
       director,
-      cast,
+      cast: parsedCast,
     });
 
     await newMovie.save();
     res.status(201).json(newMovie);
   } catch (error) {
+    console.error("❌ CREATE MOVIE ERROR:", error);
     res.status(500).json({ message: error.message });
   }
 };
+
+//   try {
+//     // console.log("📦 BODY:", req.body);
+//     // console.log("🖼️ FILES:", req.files);
+
+//     const imageFile = req.files?.photo;
+
+//     if (!imageFile) {
+//       console.log("❌ No image file received.");
+//     } else {
+//       console.log("✅ Temp file path:", imageFile.tempFilePath);
+//     }
+
+//     const photo = imageFile
+//       ? await uploadToCloudinary(imageFile.tempFilePath)
+//       : null;
+
+//     const parsedGenre = Array.isArray(req.body.genre)
+//       ? req.body.genre
+//       : [req.body.genre];
+
+//     const parsedCast = Array.isArray(req.body.cast)
+//       ? req.body.cast
+//       : [req.body.cast];
+
+//     const newMovie = new Movie({
+//       title: req.body.title,
+//       description: req.body.description,
+//       photo,
+//       genre: parsedGenre,
+//       releaseDate: req.body.releaseDate,
+//       duration: req.body.duration,
+//       trailerLink: req.body.trailerLink,
+//       director: req.body.director,
+//       cast: parsedCast,
+//     });
+
+//     await newMovie.save();
+//     res.status(201).json(newMovie);
+//   } catch (error) {
+//     console.error("❌ CREATE MOVIE ERROR:", error);
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 
 // Update Movie
 export const updateMovie = async (req, res) => {
@@ -96,22 +153,27 @@ export const createTvShow = async (req, res) => {
     } = req.body;
 
     // Access the uploaded file (e.g. from multer middleware)
-    const imageFile = req.file;
+    const imageFile = req.files?.photo;
 
-    const photo = imageFile ? await uploadToCloudinary(imageFile.path) : null;
+        const photo = imageFile
+      ? await uploadToCloudinary(imageFile.tempFilePath)
+      : null;
+
+      const parsedGenre = Array.isArray(genre) ? genre : [genre];
+      const parsedCast = Array.isArray(cast) ? cast : [cast];
 
     const newTvShow = new TvShow({
       title,
       description,
       photo, // Cloudinary URL
-      genre,
+      genre: parsedGenre,
       seasonNumber,
       episodeNumber,
       releaseDate,
       endDate,
       trailerLink,
       director,
-      cast,
+      cast:parsedCast,
     });
 
     await newTvShow.save();
