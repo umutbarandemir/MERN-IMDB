@@ -39,6 +39,7 @@ const TvShowPage = () => {
     setRating(value);
     try {
       await rateTvShow(id, value, authUser._id);
+      await fetchTvShowById(id); // Refresh TV Show data
     } catch (error) {
       console.error(error);
     }
