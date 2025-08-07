@@ -30,22 +30,26 @@ const AdminPage = () => {
     fetchItems();
   }, [fetchItems]);
 
-  useEffect(() => {
-    if (selectedItem) {
-      const isTv = selectedItem.seasonNumber;
-      setType(isTv ? "tv" : "movie");
+useEffect(() => {
+  if (selectedItem) {
+    const isTv = selectedItem.seasonNumber;
+    setType(isTv ? "tv" : "movie");
 
-      const prepared = {
-        ...selectedItem,
-        releaseDate: selectedItem.releaseDate?.split("T")[0] || "", // format yyyy-MM-dd
-        endDate: selectedItem.endDate?.split("T")[0] || "",         // optional
-      genre: Array.isArray(selectedItem.genre) ? selectedItem.genre.join(", ") : selectedItem.genre,
-      cast: Array.isArray(selectedItem.cast) ? selectedItem.cast.join(", ") : selectedItem.cast,
-      };
+    const prepared = {
+      ...selectedItem,
+      releaseDate: selectedItem.releaseDate?.split("T")[0] || "",
+      endDate: selectedItem.endDate?.split("T")[0] || "",
+      genre: Array.isArray(selectedItem.genre)
+        ? selectedItem.genre.join(", ")
+        : (typeof selectedItem.genre === "string" ? selectedItem.genre : ""),
+      cast: Array.isArray(selectedItem.cast)
+        ? selectedItem.cast.join(", ")
+        : (typeof selectedItem.cast === "string" ? selectedItem.cast : ""),
+    };
 
-      setFormData(prepared);
-    }
-  }, [selectedItem]);
+    setFormData(prepared);
+  }
+}, [selectedItem]);
 
   
 

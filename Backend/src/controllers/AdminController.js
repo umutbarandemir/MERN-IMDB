@@ -65,16 +65,54 @@ export const createMovie = async (req, res) => {
   }
 };
 
-// Update Movie
 export const updateMovie = async (req, res) => {
   try {
-    const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedMovie) return res.status(404).json({ message: 'Movie not found' });
+    const {
+      title,
+      description,
+      releaseDate,
+      duration,
+      trailerLink,
+      director,
+      genre,
+      cast,
+    } = req.body;
+
+    const imageFile = req.files?.photo;
+
+    let photo;
+    if (imageFile) {
+      photo = await uploadToCloudinary(imageFile.tempFilePath);
+    }
+
+    const parsedGenre = Array.isArray(genre) ? genre : [genre];
+    const parsedCast = Array.isArray(cast) ? cast : [cast];
+
+    const updatedMovie = await Movie.findByIdAndUpdate(
+      req.params.id,
+      {
+        title,
+        description,
+        releaseDate,
+        duration,
+        trailerLink,
+        director,
+        genre: parsedGenre,
+        cast: parsedCast,
+        ...(photo && { photo }), // Only include photo if uploaded
+      },
+      { new: true }
+    );
+
+    if (!updatedMovie) return res.status(404).json({ message: "Movie not found" });
+
     res.status(200).json(updatedMovie);
   } catch (error) {
+    console.error("Update Movie Error:", error);
     res.status(500).json({ message: error.message });
   }
 };
+
 
 // Delete Movie
 export const deleteMovie = async (req, res) => {
@@ -138,16 +176,58 @@ export const createTvShow = async (req, res) => {
   }
 };
 
-// Update TV Show
 export const updateTvShow = async (req, res) => {
   try {
-    const updatedTvShow = await TvShow.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedTvShow) return res.status(404).json({ message: 'TV Show not found' });
+    const {
+      title,
+      description,
+      releaseDate,
+      endDate,
+      trailerLink,
+      director,
+      genre,
+      cast,
+      seasonNumber,
+      episodeNumber,
+    } = req.body;
+
+    const imageFile = req.files?.photo;
+    let photo;
+    if (imageFile) {
+      photo = await uploadToCloudinary(imageFile.tempFilePath);
+    }
+
+    const parsedGenre = Array.isArray(genre) ? genre : [genre];
+    const parsedCast = Array.isArray(cast) ? cast : [cast];
+
+    const updatedTvShow = await TvShow.findByIdAndUpdate(
+      req.params.id,
+      {
+        title,
+        description,
+        releaseDate,
+        endDate,
+        trailerLink,
+        director,
+        genre: parsedGenre,
+        cast: parsedCast,
+        seasonNumber,
+        episodeNumber,
+        ...(photo && { photo }),
+      },
+      { new: true }
+    );
+
+    if (!updatedTvShow) return res.status(404).json({ message: "TV Show not found" });
+
     res.status(200).json(updatedTvShow);
   } catch (error) {
+    console.error("Update TV Show Error:", error);
     res.status(500).json({ message: error.message });
   }
 };
+
+
 
 // Delete TV Show
 export const deleteTvShow = async (req, res) => {
