@@ -65,51 +65,6 @@ export const createMovie = async (req, res) => {
   }
 };
 
-//   try {
-//     // console.log("📦 BODY:", req.body);
-//     // console.log("🖼️ FILES:", req.files);
-
-//     const imageFile = req.files?.photo;
-
-//     if (!imageFile) {
-//       console.log("❌ No image file received.");
-//     } else {
-//       console.log("✅ Temp file path:", imageFile.tempFilePath);
-//     }
-
-//     const photo = imageFile
-//       ? await uploadToCloudinary(imageFile.tempFilePath)
-//       : null;
-
-//     const parsedGenre = Array.isArray(req.body.genre)
-//       ? req.body.genre
-//       : [req.body.genre];
-
-//     const parsedCast = Array.isArray(req.body.cast)
-//       ? req.body.cast
-//       : [req.body.cast];
-
-//     const newMovie = new Movie({
-//       title: req.body.title,
-//       description: req.body.description,
-//       photo,
-//       genre: parsedGenre,
-//       releaseDate: req.body.releaseDate,
-//       duration: req.body.duration,
-//       trailerLink: req.body.trailerLink,
-//       director: req.body.director,
-//       cast: parsedCast,
-//     });
-
-//     await newMovie.save();
-//     res.status(201).json(newMovie);
-//   } catch (error) {
-//     console.error("❌ CREATE MOVIE ERROR:", error);
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
-
 // Update Movie
 export const updateMovie = async (req, res) => {
   try {
