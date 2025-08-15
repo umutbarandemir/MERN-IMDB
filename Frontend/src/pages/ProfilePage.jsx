@@ -21,7 +21,8 @@ const ProfilePage = () => {
     if (authUser?._id) {
       fetchUserComments();
     }
-  }, [authUser,fetchUserComments]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authUser?._id]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

@@ -33,3 +33,52 @@ npm install react-youtube
 -gereksiz miktarde mount oluyor sitede
 -update kısmında foto güncellenmiyor
 -consoldaki splitli uyarıyı düzelt
+-bcrypt ekle
+
+user with bcrypt
+
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+
+const userSchema = new mongoose.Schema({
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    profilePic: {
+        type: String,
+        default: "",
+    }
+}, { timestamps: true });
+
+
+// 📍 KAYDETME ÖNCESİ: Şifreyi hashle
+userSchema.pre("save", async function (next) {
+    // Şifre değişmemişse tekrar hashleme
+    if (!this.isModified("password")) return next();
+
+    try {
+        const salt = await bcrypt.genSalt(10); // 10 tur tuz
+        this.password = await bcrypt.hash(this.password, salt);
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
+// 🔑 Şifre karşılaştırma metodu
+userSchema.methods.comparePassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
+};
+
+const User = mongoose.model("User", userSchema);
+export default User;
